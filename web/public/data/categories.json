@@ -1,0 +1,42 @@
+[
+  {
+    "category": "ai-research",
+    "count": 62,
+    "avg_score": 8.3
+  },
+  {
+    "category": "vc-deals",
+    "count": 44,
+    "avg_score": 7.9
+  },
+  {
+    "category": "founders",
+    "count": 38,
+    "avg_score": 7.5
+  },
+  {
+    "category": "llm-models",
+    "count": 31,
+    "avg_score": 8.8
+  },
+  {
+    "category": "crypto-web3",
+    "count": 24,
+    "avg_score": 7.4
+  },
+  {
+    "category": "mena-gulf",
+    "count": 19,
+    "avg_score": 7.8
+  },
+  {
+    "category": "enterprise-ai",
+    "count": 17,
+    "avg_score": 7.6
+  },
+  {
+    "category": "policy-reg",
+    "count": 12,
+    "avg_score": 8.1
+  }
+]

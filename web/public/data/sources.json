@@ -1,0 +1,62 @@
+[
+  {
+    "source": "Import AI",
+    "count": 28,
+    "latest": "2026-03-20T07:30:00",
+    "avg_score": 8.9
+  },
+  {
+    "source": "a16z News",
+    "count": 24,
+    "latest": "2026-03-20T09:00:00",
+    "avg_score": 8.2
+  },
+  {
+    "source": "a16z Crypto",
+    "count": 22,
+    "latest": "2026-03-19T14:00:00",
+    "avg_score": 7.8
+  },
+  {
+    "source": "The Generalist",
+    "count": 18,
+    "latest": "2026-03-18T10:00:00",
+    "avg_score": 8.5
+  },
+  {
+    "source": "Latent Space",
+    "count": 16,
+    "latest": "2026-03-17T07:00:00",
+    "avg_score": 8.1
+  },
+  {
+    "source": "Not Boring",
+    "count": 15,
+    "latest": "2026-03-17T12:00:00",
+    "avg_score": 7.9
+  },
+  {
+    "source": "Interconnects",
+    "count": 14,
+    "latest": "2026-03-18T16:00:00",
+    "avg_score": 8.7
+  },
+  {
+    "source": "Wamda",
+    "count": 12,
+    "latest": "2026-03-16T10:00:00",
+    "avg_score": 7.2
+  },
+  {
+    "source": "a16z Policy",
+    "count": 12,
+    "latest": "2026-03-19T11:00:00",
+    "avg_score": 8.4
+  },
+  {
+    "source": "a16z Speedrun",
+    "count": 11,
+    "latest": "2026-03-19T08:00:00",
+    "avg_score": 7.6
+  }
+]

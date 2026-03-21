@@ -1,0 +1,83 @@
+name: Daily Feed Crawler
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    # Run at 06:00 UTC every day (08:00 Tehran time / 10:00 Dubai)
+    - cron: '0 6 * * *'
+    # Also run at 14:00 UTC for afternoon updates
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+    inputs:
+      force_reprocess:
+        description: 'Force re-process AI enrichment on all articles'
+        required: false
+        default: 'false'
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: crawler/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r crawler/requirements.txt
+
+      # Reuse SQLite from the most recent cached run (prefix match)
+      - name: Restore database
+        uses: actions/cache/restore@v4
+        with:
+          path: crawler/intel_blog.db
+          key: intel-blog-db-${{ github.run_id }}
+          restore-keys: |
+            intel-blog-db-
+
+      - name: Run crawler
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          DB_PATH: ./crawler/intel_blog.db
+          LOG_LEVEL: INFO
+        run: |
+          cd crawler
+          python crawler.py
+
+      - name: Export JSON for frontend
+        run: |
+          cd crawler
+          python export_json.py
+
+      - name: Save database to cache
+        uses: actions/cache/save@v4
+        with:
+          path: crawler/intel_blog.db
+          key: intel-blog-db-${{ github.run_id }}
+
+      - name: Commit exported data
+        run: |
+          git config --local user.email "crawler-bot@intel-blog.app"
+          git config --local user.name "Intel Crawler Bot"
+          git add web/public/data/
+          git diff --staged --quiet || git commit -m "chore: update feed data $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload crawler log
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: crawler-log-${{ github.run_number }}
+          path: crawler/crawler.log
+          retention-days: 7
